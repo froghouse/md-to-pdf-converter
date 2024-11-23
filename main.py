@@ -2,7 +2,6 @@ import logging
 import json
 
 import argparse
-import logging.config
 import markdown
 import jinja2
 import weasyprint
@@ -22,13 +21,11 @@ logger = setup_logging()
 
 
 def markdown_to_html(md_content: str) -> str:
-    global logger
     logger.debug('Converting Markdown to HTML')
     return markdown.markdown(md_content)
 
 
 def read_file(file_path: str) -> str:
-    global logger
     try:
         with open(file_path, 'r') as file:
             logger.debug(f'Reading file: {file_path}')
@@ -38,9 +35,11 @@ def read_file(file_path: str) -> str:
         return ''
 
 
-def html_to_pdf(html_content: str, output_pdf_path: str,
-                css_file_path: str) -> None:
-    global logger
+def html_to_pdf(
+    html_content: str, 
+    output_pdf_path: str,
+    css_file_path: str
+) -> None:
     logger.debug('Applying HTML to template')
     template = jinja2.Template(html_content)
     rendered_html = template.render()
@@ -55,9 +54,12 @@ def html_to_pdf(html_content: str, output_pdf_path: str,
     pdf_document.write_pdf(output_pdf_path, stylesheets=stylesheets)
 
 
-def process_files(input_md_path: str, output_pdf_path: str, css_file_path: str,
-                  template_path: str = None) -> None:
-    global logger
+def process_files(
+    input_md_path: str, 
+    output_pdf_path: str, 
+    css_file_path: str, 
+    template_path: str = None
+) -> None:
     markdown_content = read_file(input_md_path)
     html_content = markdown_to_html(markdown_content)
 
@@ -69,7 +71,6 @@ def process_files(input_md_path: str, output_pdf_path: str, css_file_path: str,
 
 
 def parse_arguments() -> argparse.Namespace:
-    global logger
     parser = argparse.ArgumentParser(
         description='Convert Markdown files to PDF with optional CSS and template styling.')
     parser.add_argument('-i', '--input', type=str,
@@ -84,7 +85,6 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def main():
-    global logger
     args = parse_arguments()
     process_files(args.input, args.output, args.css, args.template)
 
