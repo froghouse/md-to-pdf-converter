@@ -8,7 +8,7 @@ We’re excited that you’re interested in contributing to this project! By par
 
 ### Reporting Bugs
 If you encounter a bug:
-1. Search the [issues](https://github.com/froghouse/md-to-pdf-converter/issue) to see if it’s already reported.
+1. Search the [issues](https://github.com/froghouse/md-to-pdf-converter/issues) to see if it’s already reported.
 2. If not, create a new issue with:
    - A clear title describing the problem.
    - Steps to reproduce the issue.
