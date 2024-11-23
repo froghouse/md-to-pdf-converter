@@ -1,32 +1,63 @@
+import logging
+import json
+
 import argparse
+import logging.config
 import markdown
 import jinja2
 import weasyprint
 
 
+def load_config(config_path: str) -> dict:
+    with open(config_path, 'r') as file:
+        return json.load(file)
+
+
+def setup_logging() -> logging.Logger:
+    logging.config.dictConfig(load_config('config.json'))
+    return logging.getLogger(__name__)
+
+
+logger = setup_logging()
+
+
 def markdown_to_html(md_content: str) -> str:
+    global logger
+    logger.debug('Converting Markdown to HTML')
     return markdown.markdown(md_content)
 
 
 def read_file(file_path: str) -> str:
+    global logger
     try:
         with open(file_path, 'r') as file:
+            logger.debug(f'Reading file: {file_path}')
             return file.read()
     except FileNotFoundError:
+        logger.error(f'File not found: {file_path}')
         return ''
 
 
 def html_to_pdf(html_content: str, output_pdf_path: str,
                 css_file_path: str) -> None:
+    global logger
+    logger.debug('Applying HTML to template')
     template = jinja2.Template(html_content)
     rendered_html = template.render()
-    stylesheet = weasyprint.CSS(string=read_file(css_file_path))
+    stylesheets = []
+    if css_file_path:
+        logger.debug(f'Adding CSS file: {css_file_path}')
+        stylesheet = weasyprint.CSS(string=read_file(css_file_path))
+        stylesheets.append(stylesheet)
+    logger.debug('Converting HTML to PDF')
     pdf_document = weasyprint.HTML(string=rendered_html)
-    pdf_document.write_pdf(output_pdf_path, stylesheets=[stylesheet])
+    logger.debug(f'Writing PDF to: {output_pdf_path}')
+    pdf_document.write_pdf(output_pdf_path, stylesheets=stylesheets)
 
 
 def process_files(input_md_path: str, output_pdf_path: str, css_file_path: str,
                   template_path: str = None) -> None:
+    global logger
     markdown_content = read_file(input_md_path)
     html_content = markdown_to_html(markdown_content)
 
@@ -38,6 +69,7 @@ def process_files(input_md_path: str, output_pdf_path: str, css_file_path: str,
 
 
 def parse_arguments() -> argparse.Namespace:
+    global logger
     parser = argparse.ArgumentParser(
         description='Convert Markdown files to PDF with optional CSS and template styling.')
     parser.add_argument('-i', '--input', type=str,
@@ -51,6 +83,11 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def main():
+    global logger
     args = parse_arguments()
     process_files(args.input, args.output, args.css, args.template)
+
+
+if __name__ == '__main__':
+    main()
