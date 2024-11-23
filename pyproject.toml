@@ -8,6 +8,7 @@ readme = "README.md"
 homepage = "https://github.com/froghouse/md-to-pdf-converter"
 repository = "https://github.com/froghouse/md-to-pdf-converter"
 keywords = ["markdown", "pdf", "converter", "templates"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9"
