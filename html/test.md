@@ -26,6 +26,10 @@ can [see the source for it by adding '.text' to the URL](/projects/markdown/synt
 
 ----
 
+## Images
+
+![alt text](https://logos-world.net/wp-content/uploads/2021/10/Python-Logo.png)
+
 ## Overview
 
 ### Philosophy
