@@ -58,10 +58,16 @@ def markdown_to_html(md_content: str) -> str:
     try:
         html_content = markdown.markdown(
             md_content,
-            extensions=['codehilite']
+            extensions=['codehilite', 'extra'],
+            extension_configs={
+                'codehilite': {
+                    'linenums': True
+                    }
+            },
+            output_format='html5'
         )
         # Get Pygments CSS styles
-        pygments_css = HtmlFormatter().get_style_defs('.codehilite')
+        pygments_css = HtmlFormatter(style="sas").get_style_defs('.codehilite')
         # Inject CSS styles into HTML
         full_html = f"<style>{pygments_css}</style>\n{html_content}"
         return full_html
