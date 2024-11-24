@@ -49,8 +49,10 @@ python mdtopdf.py --input input.md --template template.html --output output.pdf 
 ```
 
 ### Options:
+- `--input`: Specify the markdown file to convert.
 - `--template`: Specify a custom HTML template for styling.
 - `--output`: Set the name and path of the output PDF file.
+- `--css`: Specify a CSS file for styling the document.
 
 ---
 
