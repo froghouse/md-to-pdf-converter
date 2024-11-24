@@ -18,7 +18,7 @@ A lightweight tool for converting Markdown files into styled PDF documents using
 
 ### Prerequisites
 To run the tool, you'll need:
-- Python 3.9 or later
+- Python 3.13 or later
 - Pip for managing Python dependencies
 
 ### Installation
@@ -36,7 +36,8 @@ To run the tool, you'll need:
 
 3. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install poetry
+   poetry install
    ```
 
 ---
