@@ -26,6 +26,10 @@ can [see the source for it by adding '.text' to the URL](/projects/markdown/synt
 
 ----
 
+## Images
+
+![alt text](https://logos-world.net/wp-content/uploads/2021/10/Python-Logo.png)
+
 ## Overview
 
 ### Philosophy
@@ -255,15 +259,17 @@ easy to include example HTML source code using Markdown -- just paste
 it and indent it, and Markdown will handle the hassle of encoding the
 ampersands and angle brackets. For example, this:
 
-    <div class="footer">
-        &copy; 2004 Foo Corporation
-    </div>
+```html
+<div class="footer">
+    &copy; 2004 Foo Corporation
+</div>
+```
 
 Regular Markdown syntax is not processed within code blocks. E.g.,
 asterisks are just literal asterisks within a code block. This means
 it's also easy to use Markdown to write about Markdown's own syntax.
 
-```
+```applescript
 tell application "Foo"
     beep
 end tell

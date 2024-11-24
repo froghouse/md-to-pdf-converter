@@ -7,6 +7,7 @@ import sys
 import jinja2
 import markdown
 import weasyprint
+from pygments.formatters import HtmlFormatter
 from weasyprint import CSS, HTML
 
 
@@ -52,10 +53,24 @@ def read_file(file_path: str) -> str:
 
 
 def markdown_to_html(md_content: str) -> str:
-    """Convert Markdown content to HTML."""
-    logger.debug('Converting Markdown to HTML')
+    """Convert Markdown content to HTML with syntax highlighting."""
+    logger.debug('Converting Markdown to HTML with syntax highlighting')
     try:
-        return markdown.markdown(md_content)
+        html_content = markdown.markdown(
+            md_content,
+            extensions=['codehilite', 'extra'],
+            extension_configs={
+                'codehilite': {
+                    'linenums': True
+                    }
+            },
+            output_format='html5'
+        )
+        # Get Pygments CSS styles
+        pygments_css = HtmlFormatter(style="sas").get_style_defs('.codehilite')
+        # Inject CSS styles into HTML
+        full_html = f"<style>{pygments_css}</style>\n{html_content}"
+        return full_html
     except Exception as e:
         logger.error(f'Error converting Markdown to HTML: {e}')
         raise
