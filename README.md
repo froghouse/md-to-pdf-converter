@@ -67,10 +67,12 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 ---
 
 ## TODO (Version 1.0 Progress)
-- [ ] Markdown to PDF conversion
-- [ ] Template support
-- [ ] CLI interface
-- [ ] Basic error handling
+- [ x ] Markdown to PDF conversion
+- [ x ] Template support
+- [ x ] CLI interface
+- [ x ] Basic error handling
+- [ ] Syntax highlighting for codeblocks
+- [ ] Embedded image and hyperlink support
 - [ ] Documentation and examples
 
 ---
