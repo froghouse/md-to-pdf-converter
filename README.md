@@ -45,7 +45,7 @@ To run the tool, you'll need:
 ## Usage
 Once installed, you can convert a Markdown file to PDF with:
 ```bash
-python mdtopdf.py input.md --template template.html --output output.pdf
+python mdtopdf.py --input input.md --template template.html --output output.pdf --css style.css
 ```
 
 ### Options:
