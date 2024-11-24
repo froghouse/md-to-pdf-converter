@@ -47,13 +47,12 @@ def html_to_pdf(
 
     if css_file_path:
         logger.debug(f'Adding CSS file: {css_file_path}')
-        css_content = read_file(css_file_path)
-        stylesheet = weasyprint.CSS(string=css_content)
+        stylesheet = weasyprint.CSS(filename=css_file_path)
         stylesheets.append(stylesheet)
 
     pdf_document = weasyprint.HTML(string=html_content)
     logger.debug(f'Writing PDF to: {output_pdf_path}')
-    pdf_document.write_pdf(output_pdf_path, stylesheets=stylesheets)
+    pdf_document.write_pdf(target=output_pdf_path, stylesheets=stylesheets)
 
 
 def process_files(
