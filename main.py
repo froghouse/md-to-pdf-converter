@@ -87,7 +87,12 @@ class MarkdownPDFConverter:
             raise
 
         try:
-            template = jinja2.Template(template_content)
+            # Configure the Jinja2 environment to raise an exception on undefined variables
+            env = jinja2.Environment(
+                loader=jinja2.BaseLoader(),
+                undefined=jinja2.StrictUndefined
+            )
+            template = env.from_string(template_content)
             self.logger.debug(f'Applying template from: {template_path}')
             return template.render(content=html_content)
         except jinja2.TemplateSyntaxError as e:

@@ -47,7 +47,7 @@ def test_invalid_template(tmp_path):
     invalid_template = "<html><body>{{ undefined_variable }}</body></html>"
     template_path = tmp_path / "template.html"
     template_path.write_text(invalid_template)
-    with pytest.raises(jinja2.UndefinedError):
+    with pytest.raises(jinja2.exceptions.UndefinedError):
         converter.render_template(html_content, str(template_path))
 
 def test_output_directory_permissions(tmp_path):
