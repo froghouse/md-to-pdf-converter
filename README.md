@@ -4,13 +4,12 @@ A lightweight tool for converting Markdown files into styled PDF documents using
 
 ---
 
-## Features (Planned for Version 1.0)
+## Features
 - Convert Markdown files into PDF documents.
 - Support for user-specified templates to customize the look and feel of the output.
 - Syntax highlighting for code blocks.
 - Embedded image and hyperlink support.
 - Command-line interface for ease of use.
-- Cross-platform compatibility (Windows, macOS, Linux).
 
 ---
 
@@ -18,7 +17,7 @@ A lightweight tool for converting Markdown files into styled PDF documents using
 
 ### Prerequisites
 To run the tool, you'll need:
-- Python 3.13 or later
+- Python 3.10 or later
 - Pip for managing Python dependencies
 
 ### Installation
@@ -31,7 +30,7 @@ To run the tool, you'll need:
 2. Create and activate a virtual environment:
    ```bash
    python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   source venv/bin/activate
    ```
 
 3. Install dependencies:
@@ -45,7 +44,7 @@ To run the tool, you'll need:
 ## Usage
 Once installed, you can convert a Markdown file to PDF with:
 ```bash
-python mdtopdf.py --input input.md --template template.html --output output.pdf --css style.css
+python mdtopdf.py --input input.md --template template.html --output output.pdf --css style.css --force
 ```
 
 ### Options:
@@ -53,6 +52,7 @@ python mdtopdf.py --input input.md --template template.html --output output.pdf 
 - `--template`: Specify a custom HTML template for styling.
 - `--output`: Set the name and path of the output PDF file.
 - `--css`: Specify a CSS file for styling the document.
+- `--force`: Force overwriting of the output file if it exists.
 
 ---
 
@@ -73,7 +73,7 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 - [x] Basic error handling
 - [x] Syntax highlighting for codeblocks
 - [x] Embedded image and hyperlink support
-- [ ] Documentation and examples
+- [x] Documentation and examples
 
 ---
 
