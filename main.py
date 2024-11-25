@@ -15,7 +15,7 @@ from weasyprint import CSS, HTML
 class MarkdownPDFConverter:
     """Class to handle the conversion of Markdown files to PDF."""
 
-    def __init__(self, config_path: str = 'config.json'):
+    def __init__(self, config_path: str = 'config.json') -> None:
         self.logger = self.setup_logging(config_path)
 
     def load_config(self, config_path: str) -> dict:
@@ -215,7 +215,7 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     """Main function to execute the script."""
     args = parse_arguments()
 
