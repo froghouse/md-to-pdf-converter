@@ -76,12 +76,27 @@ class MarkdownPDFConverter:
 
     def render_template(self, html_content: str, template_path: str) -> str:
         """Render HTML content using a Jinja2 template."""
+        self.logger.debug(f'Reading template from: {template_path}')
         try:
             template_content = self.read_file(template_path)
+        except FileNotFoundError:
+            self.logger.error(f'Template file not found: {template_path}')
+            raise
+        except Exception as e:
+            self.logger.error(f'Error reading template file at {template_path}: {e}')
+            raise
+
+        try:
             template = jinja2.Template(template_content)
             self.logger.debug(f'Applying template from: {template_path}')
             return template.render(content=html_content)
-        except jinja2.TemplateError as e:
+        except jinja2.TemplateSyntaxError as e:
+            self.logger.error(f'Syntax error in template at {template_path}: Line {e.lineno} - {e.message}')
+            raise
+        except jinja2.UndefinedError as e:
+            self.logger.error(f'Undefined variable in template at {template_path}: {e}')
+            raise
+        except Exception as e:
             self.logger.error(f'Error rendering template at {template_path}: {e}')
             raise
 
