@@ -104,13 +104,16 @@ class MarkdownPDFConverter:
                 self.logger.error(f'CSS file not found: {css_file_path}')
                 raise
             except Exception as e:
-                self.logger.error(f'Error loading CSS file at {css_file_path}. Exception: {e}')
+                self.logger.error(f'Error loading CSS file at {css_file_path}: {e}')
                 raise
 
         try:
             pdf_document = HTML(string=html_content)
             self.logger.debug(f'Writing PDF to: {output_pdf_path}')
             pdf_document.write_pdf(target=output_pdf_path, stylesheets=stylesheets)
+        except OSError as e:
+            self.logger.error(f'Error writing PDF file {output_pdf_path}: {e}')
+            raise
         except weasyprint.WeasyPrintError as e:
             self.logger.error(f'Error generating PDF: {e}')
             raise
@@ -128,6 +131,16 @@ class MarkdownPDFConverter:
     ) -> None:
         """Process the Markdown file and generate a PDF with optional styling."""
         try:
+            output_dir = os.path.dirname(output_pdf_path) or '.'
+
+            if not os.path.exists(output_dir):
+                self.logger.error(f'Output directory does not exist: {output_dir}')
+                sys.exit(1)
+
+            if not os.access(output_dir, os.W_OK):
+                self.logger.error(f'No write permission to the output directory: {output_dir}')
+                sys.exit(1)
+
             if not force_overwrite and os.path.exists(output_pdf_path):
                 self.logger.error(f'Output file {output_pdf_path} already exists. Use --force to overwrite.')
                 sys.exit(1)
@@ -142,6 +155,9 @@ class MarkdownPDFConverter:
 
         except FileNotFoundError as e:
             self.logger.error(f'File not found: {e}')
+            sys.exit(1)
+        except PermissionError as e:
+            self.logger.error(f'Permission error: {e}')
             sys.exit(1)
         except Exception as e:
             self.logger.error(
