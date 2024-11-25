@@ -71,8 +71,8 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 - [x] Template support
 - [x] CLI interface
 - [x] Basic error handling
-- [ ] Syntax highlighting for codeblocks
-- [ ] Embedded image and hyperlink support
+- [x] Syntax highlighting for codeblocks
+- [x] Embedded image and hyperlink support
 - [ ] Documentation and examples
 
 ---
