@@ -3,6 +3,7 @@ import json
 import logging
 import logging.config
 import sys
+import os
 
 import jinja2
 import markdown
@@ -122,10 +123,15 @@ class MarkdownPDFConverter:
         input_md_path: str,
         output_pdf_path: str,
         css_file_path: str | None = None,
-        template_path: str | None = None
+        template_path: str | None = None,
+        force_overwrite: bool = False
     ) -> None:
         """Process the Markdown file and generate a PDF with optional styling."""
         try:
+            if not force_overwrite and os.path.exists(output_pdf_path):
+                self.logger.error(f'Output file {output_pdf_path} already exists. Use --force to overwrite.')
+                sys.exit(1)
+
             markdown_content = self.read_file(input_md_path)
             html_content = self.markdown_to_html(markdown_content)
 
@@ -138,7 +144,10 @@ class MarkdownPDFConverter:
             self.logger.error(f'File not found: {e}')
             sys.exit(1)
         except Exception as e:
-            self.logger.error(f"An error occurred during file processing. Input file: {input_md_path}, Output file: {output_pdf_path}. Error: {e}")
+            self.logger.error(
+                f"An error occurred during file processing. Input file: {input_md_path}, "
+                f"Output file: {output_pdf_path}. Error: {e}"
+            )
             sys.exit(1)
 
 
@@ -163,6 +172,10 @@ def parse_arguments() -> argparse.Namespace:
         '-c', '--css', type=str,
         help='Path to the CSS file'
     )
+    parser.add_argument(
+        '-f', '--force', action='store_true',
+        help='Force overwriting of the output file if it exists'
+    )
     return parser.parse_args()
 
 
@@ -181,7 +194,13 @@ def main():
         sys.exit(1)
 
     converter = MarkdownPDFConverter()
-    converter.process_files(args.input, args.output, args.css, args.template)
+    converter.process_files(
+        args.input,
+        args.output,
+        args.css,
+        args.template,
+        force_overwrite=args.force
+    )
 
 
 if __name__ == '__main__':
