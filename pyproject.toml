@@ -11,7 +11,7 @@ keywords = ["markdown", "pdf", "converter", "templates"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = "^3.10"
 markdown = "^3.4"
 jinja2 = "^3.1"
 weasyprint = "^63.0"
